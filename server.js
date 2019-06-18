@@ -52,6 +52,22 @@ servidor.patch('/pokemons/:id', (request, response) => {
     })
 })
 
+servidor.patch('/pokemons/treinar/:id', (request, response) => {
+  const id = request.params.id
+  controller.treinar(id, request.body)
+    .then(pokemon => {
+      if(!pokemon) { response.sendStatus(404) }
+      else { response.send(pokemon) }
+    })
+    .catch(error => {
+      if(error.name === "MongoError" || error.name === "CastError"){
+        response.sendStatus(400)
+      } else {
+        response.sendStatus(500)
+      }
+    })
+})
+
 servidor.post('/pokemons', (request, response) => {
   controller.add(request.body)
     .then(pokemon => {
