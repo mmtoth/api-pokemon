@@ -21,17 +21,17 @@ servidor.get('/pokemons/:pokemonId', (request, response) => {
   const pokemonId = request.params.pokemonId
   controller.getById(pokemonId)
     .then(pokemon => {
-      if(!pokemon){ // pokemon === null || pokemon === undefined
-        response.sendStatus(404) // pokemon nao encontrada
+      if(!pokemon){
+        response.sendStatus(404)
       } else {
-        response.send(pokemon) // Status default é 200
+        response.send(pokemon)
       }
     })
     .catch(error => {
       if(error.name === "CastError"){
-        response.sendStatus(400) // bad request - tem algum parametro errado
+        response.sendStatus(400)
       } else {
-        response.sendStatus(500) // deu ruim, e nao sabemos oq foi
+        response.sendStatus(500)
       }
     })
 })
@@ -44,7 +44,7 @@ servidor.post('/pokemons', (request, response) => {
     })
     .catch(error => {
       if(error.name === "ValidationError"){
-        response.sendStatus(400) // bad request
+        response.sendStatus(400)
       } else {
         response.sendStatus(500)
       }

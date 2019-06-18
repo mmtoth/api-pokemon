@@ -1,7 +1,7 @@
 const { connect } = require('./PokemonsRepository')
 const pokemonsModel = require('./PokemonsSchema')
 
-connect() // para conectar no mongoDB
+connect()
 
 const calcularNivel = dates => {
   const diff = date.dataInicio.valueOf() - dataFim.valueOf();
