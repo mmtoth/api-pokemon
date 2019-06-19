@@ -6,7 +6,7 @@ connect()
 
 const calcularNivel = (datas, nivelAnterior) => {
   const diff = Math.abs(new Date(datas.dataInicio) - new Date(datas.dataFim)) / 3600000
-  const novoNivel = diff / 4;
+  const novoNivel = diff / 4 + nivelAnterior;
 
   return novoNivel >= LIMITE_NIVEL_POKEMON ? LIMITE_NIVEL_POKEMON : novoNivel;
 }
