@@ -40,7 +40,7 @@ const update = (id, pokemon) => {
 
 const treinar = async (id, datas) => {
   const pokemon = await pokemonsModel.findById(id, 'nivel')
-  const nivelAnterior = pokemon.nivel
+  const nivelPokemon = pokemon.nivel
 
   if (nivelPokemon >= LIMITE_NIVEL_POKEMON) {
     throw new Error('Seu pokémon já é forte o suficiente!')
@@ -48,7 +48,7 @@ const treinar = async (id, datas) => {
 
   return pokemonsModel.findByIdAndUpdate(
     id,
-    { $set: { nivel: calcularNivel(datas, nivelAnterior) } },
+    { $set: { nivel: calcularNivel(datas, nivelPokemon) } },
     { new: true },
   )
 }
