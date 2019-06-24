@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const servidor = express()
 const pokemonsController = require('./PokemonsController')
 const treinadoresController = require('./TreinadoresController')
+const params = require('params')
+const parametrosPermitidos = require('./parametrosPermitidos')
 const PORT = 3000
 const logger = (request, response, next) => {
   console.log(`${new Date().toISOString()} Request type: ${request.method} to ${request.originalUrl}`)
