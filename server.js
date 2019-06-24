@@ -170,5 +170,23 @@ servidor.post('/treinadores/adicionar-pokemon/:treinadorId', (request, response)
     })
 })
 
+servidor.patch('/treinadores/:treinadorId/treinar/:pokemonId', (request, response) => {
+  const treinadorId = request.params.treinadorId
+  const pokemonId = request.params.pokemonId
+  treinadoresController.treinarPokemon(treinadorId, pokemonId, request.body)
+    .then(treinador => {
+      const _id = treinador._id
+      response.send(_id)
+    })
+    .catch(error => {
+      if(error.name === "ValidationError"){
+        response.sendStatus(400)
+      } else {
+        console.log(error)
+        response.sendStatus(500)
+      }
+    })
+})
+
 servidor.listen(PORT)
 console.info(`Rodando na porta ${PORT}`)
