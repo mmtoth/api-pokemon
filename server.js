@@ -6,7 +6,7 @@ const pokemonsController = require('./PokemonsController')
 const treinadoresController = require('./TreinadoresController')
 const params = require('params')
 const parametrosPermitidos = require('./parametrosPermitidos')
-const PORT = 3000
+const PORT = 3001
 const logger = (request, response, next) => {
   console.log(`${new Date().toISOString()} Request type: ${request.method} to ${request.originalUrl}`)
 
@@ -25,8 +25,8 @@ servidor.get('/', (request, response) => {
   response.send('Olá, mundo!')
 })
 
-servidor.get('/pokemons', async (request, response) => {
-  pokemonsController.getAll()
+servidor.get('/treinadores/:treinadorId/pokemons', async (request, response) => {
+  treinadoresController.getAll()
     .then(pokemons => response.send(pokemons))
 })
 
@@ -49,46 +49,15 @@ servidor.get('/pokemons/:pokemonId', (request, response) => {
     })
 })
 
-servidor.patch('/pokemons/:id', (request, response) => {
+servidor.patch('/treinadores/:treinadorId/treinar/:pokemonId', (request, response) => {
   const id = request.params.id
-  pokemonsController.update(id, request.body)
-    .then(pokemon => {
-      if(!pokemon) { response.sendStatus(404) }
-      else { response.send(pokemon) }
+  treinadoresController.update(id, request.body)
+    .then(treinadores => {
+      if(!treinadores) { response.sendStatus(404) }
+      else { response.send(treinadores) }
     })
     .catch(error => {
       if(error.name === "MongoError" || error.name === "CastError"){
-        response.sendStatus(400)
-      } else {
-        response.sendStatus(500)
-      }
-    })
-})
-
-servidor.patch('/pokemons/treinar/:id', (request, response) => {
-  const id = request.params.id
-  pokemonsController.treinar(id, request.body)
-    .then(pokemon => {
-      if(!pokemon) { response.sendStatus(404) }
-      else { response.send(pokemon) }
-    })
-    .catch(error => {
-      if(error.name === "MongoError" || error.name === "CastError"){
-        response.sendStatus(400)
-      } else {
-        response.sendStatus(500)
-      }
-    })
-})
-
-servidor.post('/pokemons', (request, response) => {
-  pokemonsController.add(request.body)
-    .then(pokemon => {
-      const _id = pokemon._id
-      response.send(_id)
-    })
-    .catch(error => {
-      if(error.name === "ValidationError"){
         response.sendStatus(400)
       } else {
         response.sendStatus(500)

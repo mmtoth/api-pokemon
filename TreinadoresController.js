@@ -57,7 +57,7 @@ const treinarPokemon = async (treinadorId, pokemonId, datas) => {
 
   pokemon.nivel = calcularNivel(datas, pokemon.nivel)
   return treinador.save()
-}
+} 
 
 module.exports = {
   getAll,
